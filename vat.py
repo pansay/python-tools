@@ -22,6 +22,14 @@ due_amount = (amount_regular * vat_regular) + (amount_reduced * vat_reduced)
 if due_amount < free_limit:
   print('no tax ( VAT total: ', due_amount, ')')
 else:
-  print('more calc...')
-
-
+  customs = 0;
+  if zone == 1:
+    customs = zone1_fee;
+  else:
+    customs = zone2_fee
+  customs += (amount_regular + amount_reduced) * customsRate
+  if customs > max_customs_limit:
+    customs = max_customs_limit
+  vat_customs = customs * vat_regular # sic
+  due_amount += customs + vat_customs
+  print('tax due:', due_amount)
